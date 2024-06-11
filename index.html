@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site Web</title>
+    <style>
+        /* CSS du code que tu m'as fourni */
+        /* Reset des marges et paddings et utilisation de flexbox pour centrer le contenu */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Vidéo de fond */
+        #background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            z-index: -1;
+        }
+
+        /* Contenu principal */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Boîte d'informations */
+        .info-box {
+            background-color: rgba(40, 40, 40, 0.2); /* Couleur légèrement plus foncée et presque totalement transparente */
+            padding: 20px;
+            border-radius: 10px; /* Bords arrondis */
+        }
+
+        .info {
+            font-size: 24px; /* Taille du texte */
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Effet de brillance */
+            margin: 10px 0; /* Marge entre les lignes */
+        }
+
+        /* Informations sur la musique */
+        .music-info {
+            position: absolute;
+            right: 20px; /* Marge à droite */
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+
+        .music-box {
+            background-color: rgba(40, 40, 40, 0.2); /* Couleur légèrement plus foncée et presque totalement transparente */
+            padding: 20px;
+            border-radius: 10px; /* Bords arrondis */
+        }
+
+        .music-title {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .music-box img {
+            max-width: 200px; /* Taille maximale de l'image */
+            border-radius: 10px; /* Bords arrondis */
+        }
+
+        /* Bouton Play Music */
+        #playButton {
+            position: fixed;
+            left: 50px; /* Ajuste la position à gauche */
+            bottom: 20px; /* Ajuste la position verticalement */
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        #playButton:hover {
+            background-color: #45a049;
+        }
+
+        /* CSS pour la pluie rose */
+        #rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998; /* Juste en dessous des autres éléments */
+        }
+
+        .raindrop {
+            position: absolute;
+            top: -15px; /* Commence en haut de la fenêtre */
+            width: 2px;
+            height: 15px;
+            background: rgba(255, 0, 234, 0.8); /* Rose */
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="background-video" loop muted autoplay>
+        <source src="gt3rs.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="content">
+        <div class="info-box">
+            <p class="info">👀 𝕵𝖚𝖑𝖎𝖊𝖓</p>
+            <p class="info">🎁 𝟗𝟏𝟓𝟔𝟔𝟑𝟏𝟔𝟒𝖟𝟖𝟎𝟕𝟒𝟓𝟎𝟔𝟒𝟓</p>
+            <p class="info">👑 𝕱𝖗𝖆𝖓𝖈̧𝖆𝖎𝖘 𝖊𝖙 𝖋𝖎𝖊𝖗 𝖉𝖊 𝖑'𝖊̂𝖙𝖗𝖊 ! 👑</p>
+        </div>
+    </div>
+
+    <div class="music-info">
+        <div class="music-box">
+            <p class="music-title">🎵𝕸𝖚𝖘𝖎𝖀𝖊: 𝕶𝖊𝖗𝖈𝖍𝖆𝖐 𝖘𝖆𝖎𝖘𝖔𝖓 2 !</p>
+            <img src="kerchak.jpg" alt="Kerchak">
+        </div>
+    </div>
+
+    <!-- Bouton Play Music -->
+    <button id="playButton">Play Music !</button>
+
+    <!-- Pluie rose -->
+    <div id="rain"></div>
+
+    <script>
+        // Fonction pour générer des gouttes de pluie roses
+        function createRain() {
+            const rainContainer = document.getElementById('rain');
+            const numDrops = 100; // Nombre de gouttes de pluie
+            for (let i = 0; i < numDrops; i++) {
+               
+                const drop = document.createElement('div');
+                drop.className = 'raindrop';
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        createRain(); // Appeler la fonction pour créer la pluie
+
+        // Récupération de la référence vers la balise audio et le bouton
+        var audio = new Audio("Kerchak.mp3");
+        var playButton = document.getElementById("playButton");
+
+        // Ajout d'un gestionnaire d'événement clic sur le bouton
+        playButton.addEventListener("click", function() {
+            // Vérifie si la musique est en pause, si oui, la joue,
+            if (audio.paused) {
+                audio.play();
+                playButton.textContent = "Pause Music";
+            } else {
+                audio.pause();
+                playButton.textContent = "Play Music !";
+            }
+        });
+    </script>
+    
+    <footer style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: white;">
+        © Pistol.lol 2024 by Julien © DM OPEN
+    </footer>
+</body>
+</html>
